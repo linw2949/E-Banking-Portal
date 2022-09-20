@@ -1,0 +1,25 @@
+# Spring Boot Setting --------------------------------------------------------------------------------------------------
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-circular-references: true
+
+# Kafka Setting --------------------------------------------------------------------------------------------------------
+app:
+  topic:
+    transaction: transaction
+
+# logging Setting ------------------------------------------------------------------------------------------------------
+logging:
+  level:
+    root: WARN
+    org.springframework.web: INFO
+    com.winnie: TRACE
+
+# jwt Setting ----------------------------------------------------------------------------------------------------------
+jwt:
+  secret: winnie
+
+
