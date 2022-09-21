@@ -9,6 +9,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String userName;
 	private String iban;
+	private String userName;
 }

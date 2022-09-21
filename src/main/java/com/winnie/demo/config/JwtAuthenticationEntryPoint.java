@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * rejects every unauthenticated request and send error code 401
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private static Log logger = LogFactory.getLog(JwtAuthenticationEntryPoint.class);

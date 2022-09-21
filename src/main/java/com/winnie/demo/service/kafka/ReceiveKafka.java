@@ -15,10 +15,13 @@ public class ReceiveKafka {
     private TransactionService transactionService;
     private static Log logger = LogFactory.getLog(ReceiveKafka.class);
 
-    @KafkaListener(topics = "${app.topic.transaction}", groupId = "1", containerFactory = "transactionListener")
+    @KafkaListener(topics = "${app.topic.transaction}", containerFactory = "transactionListener")
     public void receive(Transaction transaction) {
         if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
+            JSONObject logParams = new JSONObject();
+            logParams.put("transaction", transaction);
+
+            logger.debug(logParams);
         }
         transactionService.insertTransaction(transaction);
     }

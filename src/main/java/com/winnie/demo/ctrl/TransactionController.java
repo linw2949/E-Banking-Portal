@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/transaction")
@@ -23,7 +24,7 @@ public class TransactionController {
     private HttpServletRequest request;
 
     @PostMapping("/create")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction request) {
+    public ResponseEntity<Transaction> createTransaction(@Valid @RequestBody Transaction request) {
         if (logger.isDebugEnabled()) {
             logger.debug(new JSONObject());
         }

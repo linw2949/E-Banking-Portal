@@ -1,13 +1,14 @@
 package com.winnie.demo.dao;
 
 import com.winnie.demo.misc.Tuple;
+import com.winnie.demo.service.util.Format;
 import com.winnie.model.Account;
 import com.winnie.model.Transaction;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.NotAcceptableStatusException;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -41,19 +42,25 @@ public class MockDAO {
     @PostConstruct
     private void initDB() {
         Transaction transaction = Transaction.builder().id("89d3o179-abcd-465b-o9ee-e2d5f6ofEld46").currency("CHF")
-                .iban("CH93-0000-0000-0000-0000-0").date("01-10-2020").description("Online payment CHF")
+                .iban("CH93-0000-0000-0000-0000-0").date("20220921").description("Online payment CHF")
                 .amount(new BigDecimal(75)).build();
 
 
-        accountTable.add(new Account("winnie", "CH93-0000-0000-0000-0000-0"));
+        accountTable.add(new Account("CH93-0000-0000-0000-0000-0", "winnie"));
+        accountTable.add(new Account("CH93-0000-0000-0000-0000-1", "winnie"));
+        accountTable.add(new Account("CH93-0000-0000-0000-0000-2", "winnie"));
+        accountTable.add(new Account("CH93-0000-0000-0000-0000-3", "lily"));
+        accountTable.add(new Account("CH93-0000-0000-0000-0000-4", "lily"));
         transactionTable.add(transaction);
+        view();
+    }
+    private void view() {
         AccountTransactionView = joinOn(
                 accountTable,
                 transactionTable,
                 t -> t.a.getIban().equals(t.b.getIban())
         );
     }
-
     /**
      * this method mock Oracle DB join
      *
@@ -86,53 +93,31 @@ public class MockDAO {
         }
 
         transactionTable.add(transaction);
+        view();
         return transaction;
     }
 
-    public List<Transaction> callFunctionQueryTransaction(String username, String iban) {
+    public List<Transaction> callFunctionQueryTransaction(String username, String iban, int pageNo, int pageSize) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("username", username);
             logParams.put("iban", iban);
-
-            logger.debug(logParams);
-        }
-
-        Optional<Account> optional = accountTable.stream().filter(p -> p.getUserName().equals(username) && p.getIban().equals(iban)).findFirst();
-        if (!optional.isPresent()) {
-            throw new NotAcceptableStatusException("The iban cannot meet the conditions in the request header.");
-        }
-
-        return transactionTable.stream()
-                .filter(p -> p.getIban().equals(iban))
-                .sorted(Comparator.comparing(Transaction::getDate))
-                .collect(Collectors.toList());
-    }
-
-    public List<Transaction> getPage(List<Transaction> sourceList, int page, int pageSize) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("sourceList.size", sourceList.size());
-            logParams.put("page", page);
+            logParams.put("pageNo", pageNo);
             logParams.put("pageSize", pageSize);
 
             logger.debug(logParams);
         }
 
-        if (pageSize <= 0 || page <= 0) {
-            throw new IllegalArgumentException("invalid page size: " + pageSize);
-        }
+        int fromIndex = (pageNo - 1) * pageSize;
+        String aYearAgo = Format.dateFormat(DateUtils.addYears(new Date(), -1), "03"); // 03: yyyyMMdd
+        List<Transaction> transaction = AccountTransactionView.stream()
+                .filter(p -> p.a.getIban().equals(iban) && p.a.getUserName().equals(username) && p.b.getDate().compareTo(aYearAgo)>0)
+                .map(p -> p.b).sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
 
-        int fromIndex = (page - 1) * pageSize;
-        if (sourceList == null || sourceList.size() <= fromIndex) {
-            return Collections.emptyList();
-        }
-
-        // toIndex exclusive
-        return sourceList.subList(fromIndex, Math.min(fromIndex + pageSize, sourceList.size()));
+        return transaction.subList(fromIndex, Math.min(fromIndex + pageSize, transaction.size()));
     }
 
-    public Optional<Transaction> findById(String id) {
+    public Optional<Transaction> callFunctionGetTransactionById(String id) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("id", id);
@@ -142,16 +127,5 @@ public class MockDAO {
 
         return transactionTable.stream()
                 .filter(p -> p.getId().equals(id)).findFirst();
-    }
-
-    public Optional<Account> findUser(String userName) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("userName", userName);
-
-            logger.debug(logParams);
-        }
-
-        return accountTable.stream().filter(p -> p.getUserName().equals(userName)).findFirst();
     }
 }

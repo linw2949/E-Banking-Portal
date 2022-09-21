@@ -1,11 +1,14 @@
 package com.winnie.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -15,16 +18,20 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
-    @JsonProperty
+    @NotBlank
+    @Size(max = 40)
     private String id;
-    @JsonProperty
+    @NotBlank
+    @Pattern(regexp="^[A-Z]{3}$")
     private String currency;
-    @JsonProperty
+    @NotNull
     private BigDecimal amount;
-    @JsonProperty
+    @NotBlank
+    @Size(max = 26)
     private String iban;
-    @JsonProperty
+    @NotBlank
+    @Pattern(regexp="^\\d{4}\\d{2}\\d{2}$")
     private String date;
-    @JsonProperty
+    @Size(max = 20, message = "description is not longer than 20 digits")
     private String description;
 }

@@ -28,10 +28,14 @@ public class TransactionService extends AbstractBaseService {
 
     public Transaction insertTransaction(Transaction trans) {
         if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
+            JSONObject logParams = new JSONObject();
+            logParams.put("trans", trans);
+
+            logger.debug(logParams);
         }
+
         // 1. check if the primary key is already existed. If so, return HTTP status 422 -------------------------------
-        Optional<Transaction> optional = getMockDAO().findById(trans.getId());
+        Optional<Transaction> optional = getMockDAO().callFunctionGetTransactionById(trans.getId());
         if (optional.isPresent()) {
             throw new UnprocessableEntityException("The id of the product is duplicated.");
         }
@@ -53,10 +57,11 @@ public class TransactionService extends AbstractBaseService {
 
         // 1. Query the DB and get the paginated list of the given iban money account transactions ---------------------
         String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-        List<Transaction> transactionList = getMockDAO().getPage(getMockDAO().callFunctionQueryTransaction(username, iban), pageNo, pageSize);
+        List<Transaction> transactionList = getMockDAO().callFunctionQueryTransaction(username, iban, pageNo, pageSize);
         int totalCount = transactionList.size();
-        String startDate = Format.dateFormat(transactionList.get(0).getDate());
-        String endDate = Format.dateFormat(transactionList.get(totalCount - 1).getDate());
+        if(totalCount==0) return new TransactionRes();
+        String endDate = Format.dateFormat(transactionList.get(0).getDate(),"01"); // 01: yyyyMMdd-> yyyy-MM-dd
+        String startDate = Format.dateFormat(transactionList.get(totalCount - 1).getDate(),"01"); // 01: yyyyMMdd-> yyyy-MM-dd
 
         // 2. Get exchange rate on any given date is provided by an external API ---------------------------------------
         JSONObject dateExchange = getExchangeOfDateRange(startDate, endDate);
@@ -66,7 +71,7 @@ public class TransactionService extends AbstractBaseService {
 
         // 3. Sum the total credit and debit values --------------------------------------------------------------------
         for (Transaction p : transactionList) {
-            String dateKey = Format.dateFormat(p.getDate());
+            String dateKey = Format.dateFormat(p.getDate(),"01"); // 01: yyyyMMdd-> yyyy-MM-dd
             BigDecimal exchangeRate = (BigDecimal) dateExchange.getJSONObject(dateKey).get(p.getCurrency());
             BigDecimal baseAmount = p.getAmount().divide(exchangeRate, 2, RoundingMode.HALF_UP);
             // 3.1. If the amount is greater than zero, then add to totalCredit; otherwise, totalDebit -----------------

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/SendKafka", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SendKafkaController {
@@ -21,7 +23,7 @@ public class SendKafkaController {
     private SendKafka sendKafka;
 
     @PostMapping
-    public ResponseEntity<Transaction> sendKafka(@RequestBody Transaction request) {
+    public ResponseEntity<Transaction> sendKafka(@Valid @RequestBody Transaction request) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("request", request);

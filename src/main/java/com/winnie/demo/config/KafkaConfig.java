@@ -17,6 +17,9 @@ import java.awt.print.Book;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * setting Kafka Consumer & Producer (For simplicity reasons, the project are the Consumer & Producer at the same time)
+ */
 @EnableKafka
 @Configuration
 
@@ -26,7 +29,7 @@ public class KafkaConfig {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "127.0.0.1:9092");
+                "localhost:29092");
         config.put(ConsumerConfig.GROUP_ID_CONFIG,
                 "group_id");
         config.put(
@@ -55,7 +58,7 @@ public class KafkaConfig {
     public ProducerFactory<String, Book> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "127.0.0.1:9092");
+                "localhost:29092");
         config.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);

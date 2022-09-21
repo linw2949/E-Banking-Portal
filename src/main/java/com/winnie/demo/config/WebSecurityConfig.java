@@ -19,6 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * customization to both WebSecurity and HttpSecurity
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -49,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             logger.debug(logParams);
         }
 
-        // configure AuthenticationManager so that it knows from where to load JwtReq for matching credentials using BCryptPasswordEncoder
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 

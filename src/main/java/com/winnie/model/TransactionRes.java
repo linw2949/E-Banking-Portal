@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class TransactionRes extends PagingRes implements Serializable {
     private static final long serialVersionUID = 1L;
-    private BigDecimal totalCredit;
-    private BigDecimal totalDebit ;
+    private BigDecimal totalCredit = BigDecimal.ZERO;
+    private BigDecimal totalDebit = BigDecimal.ZERO;
     private List<Transaction> transactionList = new ArrayList<>();
 }

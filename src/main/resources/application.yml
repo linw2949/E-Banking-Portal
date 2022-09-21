@@ -17,7 +17,12 @@ logging:
     root: WARN
     org.springframework.web: INFO
     com.winnie: TRACE
-
+  file:
+    name: ./log/log.log
+  logback:
+    rollingpolicy:
+      max-history: 90
+      max-file-size: 10MB
 # jwt Setting ----------------------------------------------------------------------------------------------------------
 jwt:
   secret: winnie
