@@ -89,7 +89,7 @@ Wait until those three container zookeeper, kafka, demo are all Running, go to h
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/winnielin2949/
 [product-screenshot]: images/screenshot.png
-[Kafka]: https://kafka.apache.org/logos/kafka_logo--simple.png
+[Kafka]: https://i0.wp.com/piotrminkowski.com/wp-content/uploads/2022/02/Screenshot-2022-02-04-at-13.28.25.png?resize=696%2C341&ssl=1
 [Kafka-url]: https://kafka.apache.org/
 [Spring boot]: https://www.split.io/wp-content/uploads/2021/05/BLOG-SpringBoot_Docker.png
 [Spring boot-url]: https://spring.io/
