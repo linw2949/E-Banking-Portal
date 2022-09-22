@@ -29,7 +29,7 @@ public class KafkaConfig {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "localhost:29092");
+                "34.67.69.239:9092");
         config.put(ConsumerConfig.GROUP_ID_CONFIG,
                 "group_id");
         config.put(
@@ -58,7 +58,7 @@ public class KafkaConfig {
     public ProducerFactory<String, Book> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "localhost:29092");
+                "34.67.69.239:9092");
         config.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);

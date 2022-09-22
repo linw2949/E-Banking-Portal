@@ -34,7 +34,7 @@ public class SpringFoxConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Winnie Backend Engineer Hiring Challenge")
+        return new ApiInfoBuilder().title("E-Banking-Portal")
                 .description("API Endpoint Decoration")
                 .contact(new Contact("Developer", "", "linw2949@gmail.com"))
                 .license("Apache 2.0")
