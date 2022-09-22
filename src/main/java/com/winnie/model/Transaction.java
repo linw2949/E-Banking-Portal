@@ -32,6 +32,6 @@ public class Transaction implements Serializable {
     @NotBlank
     @Pattern(regexp="^\\d{4}\\d{2}\\d{2}$")
     private String date;
-    @Size(max = 20, message = "description is not longer than 20 digits")
+    @Size(max = 20, message = "description is not longer than 20")
     private String description;
 }
