@@ -8,11 +8,11 @@
   <p align="center">
     An simple E-Banking-Portal example 
     <br />
-    <a href="http://34.72.139.232:60000/swagger-ui/#/">View Demo</a>
+    <a href="http://34.72.139.232:60000/swagger-ui/#/" target="_blank">View Demo</a>
     ·
-    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues">Report Bug</a>
+    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues" target="_blank">Report Bug</a>
     ·
-    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues">Request Feature</a>
+    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues" target="_blank">Request Feature</a>
   </p>
 </div>
 
