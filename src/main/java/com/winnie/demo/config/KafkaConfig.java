@@ -29,7 +29,7 @@ public class KafkaConfig {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "172.20.10.4:29092"); // host.docker.internal
+                "127.0.0.1:9092"); // in image winnie2949/demo:2.0 -> 172.20.10.4:29092 host.docker.internal
         config.put(ConsumerConfig.GROUP_ID_CONFIG,
                 "group_id");
         config.put(
@@ -58,7 +58,7 @@ public class KafkaConfig {
     public ProducerFactory<String, Book> producerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "172.20.10.4:29092"); // host.docker.internal
+                "127.0.0.1:9092"); // in image winnie2949/demo:2.0 -> 172.20.10.4:29092 host.docker.internal
         config.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);
