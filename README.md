@@ -27,7 +27,7 @@
       </ul>
     </li>
     <li>
-      <a href="# :gear:Getting Started">Getting Started</a>
+      <a href="#Getting Started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
@@ -61,7 +61,7 @@ This is a simple e-Banking Portal that implements a reusable REST API for return
 
 
 <!-- GETTING STARTED -->
-## :gear:Getting Started
+## Getting Started
 
 There are many ways on setting up this project locally, but the easiest and most recommended way is to use a docker container!
 To get a local copy up and running follow these simple steps. :trollface:
