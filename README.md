@@ -53,6 +53,7 @@ This is a simple e-Banking Portal that implements a reusable REST API for return
 [![Kafka][Kafka]][Kafka-url]
 [![Spring boot][Spring boot]][Spring boot-url]
 [![K8s][K8s]][K8s-url]
+[![CircleCI][CircleCI]][CircleCI-url]
 
 <p align="right"><a href="#readme-top"><img src="images/back.png" alt="back" width="40" height="40"></a></p>
 
@@ -189,3 +190,5 @@ USER_ID:old_key: | PASSWORD |
 [Java-url]: https://start.spring.io/
 [K8s]: images/SpringBoot-K8s-diagram.png
 [K8s-url]: https://cloud.google.com/
+[CircleCI]: https://miro.medium.com/max/1400/1*Q2ru6CvvLq2phvQZ8Da0wA.png
+[CircleCI-url]: https://circleci.com/
