@@ -61,14 +61,15 @@ This is a simple e-Banking Portal that implements a reusable REST API for return
 ## :gear:Getting Started
 
 There are many ways on setting up this project locally, but the easiest and most recommended way is to use a docker container!
-To get a local copy up and running follow these simple steps.
+To get a local copy up and running follow these simple steps. :trollface:
 
+Of course, you can also choose not to use docker, run the code directly in intellij, and then modify the part you want to change
 ### Prerequisites
-1. First, you must have desktop docker.
-[Download docker](https://www.docker.com/) to open this project in docker container.
 
+<details><summary>:electron:if you want to use a docker container</summary>
+
+1. First, you must have [desktop docker.](https://www.docker.com/)
 2. Second, download the [docker-compose.yaml](https://github.com/WinnieLinshi/E-Banking-Portal/blob/master/docker-compose.yaml) file of this project.
-
 3. Once the download finished, execute the following commands in the same path of this file to pull docker image and run it.
 
   ```bash
@@ -76,7 +77,17 @@ To get a local copy up and running follow these simple steps.
   ```
 
 Until those 3 container zookeeper, kafka, demo are all Running, you can go to http://localhost:8080/swagger-ui/ see the project running as you can see above.
+</details>
+<details><summary>:atom:	if you want to run the code directly in intellij </summary>
 
+1. First you have to have [intellij.](https://www.jetbrains.com/idea/download/#section=windows)
+2. [Set up kafka zookeeper & kafka server](https://kafka.apache.org/quickstart) stop after step2.
+3. pull [this project](https://github.com/WinnieLinshi/E-Banking-Portal) to your local repository.
+4. run [DemoApplication.java](https://github.com/WinnieLinshi/E-Banking-Portal/blob/master/src/main/java/com/winnie/demo/DemoApplication.java) in IDE.
+
+</details>
+
+**or you can use [the demo](http://34.72.139.232:60000/swagger-ui/#/) :triangular_flag_on_post: directly**
 
 <!-- USAGE EXAMPLES -->
 ## :nut_and_bolt:Usage
