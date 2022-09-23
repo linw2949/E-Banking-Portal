@@ -27,12 +27,12 @@
       </ul>
     </li>
     <li>
-      <a href="#:gear:Getting Started">Getting Started</a>
+      <a href="# :gear:Getting Started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
-    <li><a href="#:nut_and_bolt:Usage">Usage</a></li>
+    <li><a href="#Usage">Usage</a></li>
     <li><a href="#:octocat: Table Schema">Table Schema</a></li>
     <li><a href="#:iphone:	Contact">Contact</a></li>
   </ol>
@@ -93,7 +93,7 @@ Until those 3 container zookeeper, kafka, demo are all Running, you can go to ht
 **or you can use [the demo](http://34.72.139.232:60000/swagger-ui/#/) :triangular_flag_on_post: directly**
 
 <!-- USAGE EXAMPLES -->
-## :nut_and_bolt:Usage
+## Usage:nut_and_bolt:
 
 The page you see in http://localhost:8080/swagger-ui/ is an api list page [swagger](https://swagger.io/) that requires login to use, so please first use the api /authenticate under jwt-authentication-controller, and set the account to winnie and password to password, the response will give you a jwttoken.:lock:
 
