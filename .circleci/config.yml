@@ -27,8 +27,8 @@ jobs:
                 TAG=0.1.$CIRCLE_BUILD_NUM
 
                 docker build -t winnie2949/demo:$TAG .
-                docker login -u winnie2949 -p $DOCKER_PASS
-
+                docker login -u $DOCKER_USER --password-stdin
+                echo $DOCKER_PASS
                 docker push winnie2949/demo:$TAG
 
 
