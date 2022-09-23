@@ -20,14 +20,14 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
-          path: build/libs/demo-0.0.1-SNAPSHOT.jar
+          path: target/demo-0.0.1-SNAPSHOT.jar
       - run:
           name: build and push Docker image
           command: |
                 TAG=0.1.$CIRCLE_BUILD_NUM
 
                 docker build -t winnie2949/demo:$TAG .
-                docker login -u $DOCKER_USER -p $DOCKER_PASS
+                docker login -u winnie2949 -p $DOCKER_PASS
 
                 docker push winnie2949/demo:$TAG
 
