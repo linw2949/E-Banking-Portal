@@ -45,7 +45,7 @@
 
 This is a simple e-Banking Portal that implements a reusable REST API for returning the paginated list of money account transactions created in an arbitrary calendar month for a given customer who is logged in the portal. For each transaction ‘page’ return the total credit and debit values at the current exchange rate (from [the third-party provider](https://apilayer.com/marketplace/exchangerates_data-api)). The source of the list of transactions is consumed from a Kafka topic. There is a [Docker image out of the application](https://registry.hub.docker.com/layers/winnie2949/demo/1.4/images/sha256-57cd27716e1203aaada15796c429b3f89264aedc335dbced652a5d7e5fb9c29f?context=explore) and [the configuration](https://github.com/WinnieLinshi/E-Banking-Portal/blob/master/docker-k8s-demo.yaml) for deploying it to Kubernetes.
 
-[Demo link](http://34.72.139.232:60000/swagger-ui/#/) here is the service that I deployed to [GCP](https://cloud.google.com/) according to the k8s configuration file provided above :slightly_smiling_face::+1:
+[Demo link](http://34.72.139.232:60000/swagger-ui/#/) here is the service that I deployed to [GKE](https://cloud.google.com/) according to the k8s configuration file provided above :slightly_smiling_face::+1:
 
 <p align="right"><a href="#readme-top"><img src="images/back.png" alt="back" width="40" height="40"></a></p>
 
