@@ -21,20 +21,20 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#:left_speech_bubble:	About The Project">About The Project</a>
+      <a href="#left_speech_bubbleabout-the-project">About The Project</a>
       <ul>
-        <li><a href=":pick:Built With ">Built With</a></li>
+        <li><a href="#pickbuilt-with">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#Getting Started">Getting Started</a>
+      <a href="#geargetting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
-    <li><a href="#Usage">Usage</a></li>
-    <li><a href="#:octocat: Table Schema">Table Schema</a></li>
-    <li><a href="#:iphone:	Contact">Contact</a></li>
+    <li><a href="#nut_and_boltusage">Usage</a></li>
+    <li><a href="#octocat-table-schema">Table Schema</a></li>
+    <li><a href="#iphonecontact">Contact</a></li>
   </ol>
 </details>
 
@@ -61,7 +61,7 @@ This is a simple e-Banking Portal that implements a reusable REST API for return
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## :gear:Getting Started
 
 There are many ways on setting up this project locally, but the easiest and most recommended way is to use a docker container!
 To get a local copy up and running follow these simple steps. :trollface:
@@ -93,7 +93,7 @@ Until those 3 container zookeeper, kafka, demo are all Running, you can go to ht
 **or you can use [the demo](http://34.72.139.232:60000/swagger-ui/#/) :triangular_flag_on_post: directly**
 
 <!-- USAGE EXAMPLES -->
-## Usage:nut_and_bolt:
+## :nut_and_bolt:Usage
 
 The page you see in http://localhost:8080/swagger-ui/ is an api list page [swagger](https://swagger.io/) that requires login to use, so please first use the api /authenticate under jwt-authentication-controller, and set the account to winnie and password to password, the response will give you a jwttoken.:lock:
 
@@ -153,12 +153,12 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 ## :octocat: Table Schema
 **These are the initial data for this project**
 
-#### TRANSACTION
+### TRANSACTION
 | ID:old_key:           | CURRENCY     | IBAN         | DATE     | DESCRIPTION  | AMOUNT |
 |--------------|--------------|--------------|----------|--------------|-------|
 | 89d3o179-abcd-465b-o9ee-e2d5f6ofEld46 | CHF  | CH93-0000-0000-0000-0000-0 | 20220921 | Online payment CHF | 75    |
 
-#### ACCOUNT
+### ACCOUNT
  USER_ID:old_key: | IBAN  :old_key:           |
 ---------|---------------------------|
 | winnie  | CH93-0000-0000-0000-0000-0 |
@@ -167,7 +167,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 | lily    | CH93-0000-0000-0000-0000-3 |
 | lily  | CH93-0000-0000-0000-0000- |
 
-#### USER
+### USER
 USER_ID:old_key: | PASSWORD |
 ---------|----------|
 | winnie  | password |
