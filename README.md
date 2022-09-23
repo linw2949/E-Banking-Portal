@@ -118,6 +118,7 @@ Request format specification:
 The request data will be consumed by kafka of the original service and written to the database.
 
 Response: The content of the message successfully sent to kafka
+
 If Http-code is not 200, it means there are errors in formats, permissions, repetitions, etc.
 
 </details>
@@ -125,13 +126,13 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 <details>
 <summary>transaction-controller GET:key: /transaction/{iban}/page={pageNo}&pageSize={pageSize}</summary>
 The api that allows the logged in person to view his own account transaction records in the past year.
-winnie has 3 accounts: CH93-0000-0000-0000-0000-0, CH93-0000-0000-0000-0000-1, CH93-0000-0000-0000-0000-2
-lily has 2:CH93-0000-0000-0000-0000-3, CH93-0000-0000-0000-0000-4
 
-Winnie, who is logged-on in the portal, can only check her own account transaction information.
+So, Winnie, who is logged-on in the portal, can only check her own account transaction information.
 
 Response: The query results are sorted from new to old, total credit and debit are converted using the exchange rate on the day of the transaction, and the amount converted is in euros.
+
 If Http-code is not 200, it means there are errors in formats, permissions, etc.
+
 </details>
 
 <details>
@@ -140,7 +141,9 @@ If Http-code is not 200, it means there are errors in formats, permissions, etc.
 Directly adding transaction data here does not pass through the production and consumption of kafka
 Request format specification is the same as SendKafka above.
 
+
 Response: The content of the message successfully added to DB
+
 If Http-code is not 200, it means there are errors in formats, permissions, repetitions, etc.
 </details>
 
