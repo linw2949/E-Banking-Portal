@@ -8,11 +8,11 @@
   <p align="center">
     An simple E-Banking-Portal example 
     <br />
-    <a href="http://34.72.139.232:60000/swagger-ui/#/">View Demo</a>
+    <a href="http://34.72.139.232:60000/swagger-ui/#/" target="_blank">View Demo</a>
     ·
-    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues">Report Bug</a>
+    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues" target="_blank">Report Bug</a>
     ·
-    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues">Request Feature</a>
+    <a href="https://github.com/WinnieLinshi/E-Banking-Portal/issues" target="_blank">Request Feature</a>
   </p>
 </div>
 
@@ -38,15 +38,17 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## :left_speech_bubble:	About The Project
 
 [![Product Name Screen Shot][product-screenshot]](http://34.72.139.232:60000/swagger-ui/#/)
 
 This is a simple e-Banking Portal that implements a reusable REST API for returning the paginated list of money account transactions created in an arbitrary calendar month for a given customer who is logged in the portal. For each transaction ‘page’ return the total credit and debit values at the current exchange rate (from [the third-party provider](https://apilayer.com/marketplace/exchangerates_data-api)). The source of the list of transactions is consumed from a Kafka topic. There is a [Docker image out of the application](https://registry.hub.docker.com/layers/winnie2949/demo/1.4/images/sha256-57cd27716e1203aaada15796c429b3f89264aedc335dbced652a5d7e5fb9c29f?context=explore) and [the configuration](https://github.com/WinnieLinshi/E-Banking-Portal/blob/master/docker-k8s-demo.yaml) for deploying it to Kubernetes.
 
+[Demo link](http://34.72.139.232:60000/swagger-ui/#/) here is the service that I deployed to [GCP](https://cloud.google.com/) according to the k8s configuration file provided above :slightly_smiling_face::+1:
+
 <p align="right"><a href="#readme-top"><img src="images/back.png" alt="back" width="40" height="40"></a></p>
 
-### Built With 
+### :pick:Built With 
 [![Java][Java]][Java-url]
 [![Kafka][Kafka]][Kafka-url]
 [![Spring boot][Spring boot]][Spring boot-url]
@@ -56,7 +58,7 @@ This is a simple e-Banking Portal that implements a reusable REST API for return
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## :gear:Getting Started
 
 There are many ways on setting up this project locally, but the easiest and most recommended way is to use a docker container!
 To get a local copy up and running follow these simple steps.
@@ -77,16 +79,16 @@ Until those 3 container zookeeper, kafka, demo are all Running, you can go to ht
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## :nut_and_bolt:Usage
 
-The page you see in http://localhost:8080/swagger-ui/ is an api list page [swagger](https://swagger.io/) that requires login to use, so please first use the api /authenticate under jwt-authentication-controller, and set the account to winnie and password to password, the response will give you a jwttoken.
+The page you see in http://localhost:8080/swagger-ui/ is an api list page [swagger](https://swagger.io/) that requires login to use, so please first use the api /authenticate under jwt-authentication-controller, and set the account to winnie and password to password, the response will give you a jwttoken.:lock:
 
 Then copy and paste this jwttoken to the Authorize value area above, which is the hearer of the api.
 
 After pasting, please add "Bearer " at the front then click authorize button, this is the norm.
 By authorizing you can use other APIs!
 <details>
-<summary>send-kafka-controller POST /SendKafka</summary>
+<summary>send-kafka-controller POST:key:/SendKafka</summary>
 
 This is a simple Kafka producer function.
 Request format specification:
@@ -108,7 +110,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 </details>
 
 <details>
-<summary>transaction-controller GET /transaction/{iban}/page={pageNo}&pageSize={pageSize}</summary>
+<summary>transaction-controller GET:key: /transaction/{iban}/page={pageNo}&pageSize={pageSize}</summary>
 The api that allows the logged in person to view his own account transaction records in the past year.
 winnie has 3 accounts: CH93-0000-0000-0000-0000-0, CH93-0000-0000-0000-0000-1, CH93-0000-0000-0000-0000-2
 lily has 2:CH93-0000-0000-0000-0000-3, CH93-0000-0000-0000-0000-4
@@ -120,7 +122,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, etc.
 </details>
 
 <details>
-<summary>transaction-controller POST /transaction/create
+<summary>transaction-controller POST:key: /transaction/create
 </summary>
 Directly adding transaction data here does not pass through the production and consumption of kafka
 Request format specification is the same as SendKafka above.
@@ -130,7 +132,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 </details>
 
 <!-- CONTACT -->
-## Contact
+## :iphone:	Contact
 
  [![LinkedIn][linkedin-shield]][linkedin-url]  
  **Winnie Lin** - [linw2949@gmail.com](mailto:linw2949@gmail.com)
