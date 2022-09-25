@@ -24,7 +24,7 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String getUsernameFromToken(String token) {
+    public String getUserIdFromToken(String token) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("token", token);
@@ -71,7 +71,7 @@ public class JwtTokenUtil implements Serializable {
         }
 
         final Date expiration = getClaimFromToken(token, Claims::getExpiration);
-        final String username = getUsernameFromToken(token);
+        final String username = getUserIdFromToken(token);
         return (username.equals(userDetails.getUsername()) && !expiration.before(new Date()));
     }
 }

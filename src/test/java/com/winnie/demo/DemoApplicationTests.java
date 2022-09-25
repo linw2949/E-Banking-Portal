@@ -1,7 +1,6 @@
 package com.winnie.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.winnie.demo.dao.MockDAO;
 import com.winnie.model.JwtReq;
 import com.winnie.model.Transaction;
 import org.json.JSONObject;
@@ -21,10 +20,6 @@ import java.math.BigDecimal;
 @SpringBootTest
 @AutoConfigureMockMvc
 class DemoApplicationTests {
-
-    @Autowired
-    private MockDAO mockDAO;
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +45,7 @@ class DemoApplicationTests {
                 .amount(new BigDecimal(75)).build();
 
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/transaction/create")
-                .header("Authorization","Bearer "+getAuthenticateToken())
+                .header("Authorization", "Bearer " + getAuthenticateToken())
                 .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(transaction)));
 
         response.andExpect(MockMvcResultMatchers.status().isOk());

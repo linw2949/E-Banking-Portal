@@ -44,11 +44,11 @@ public class JwtAuthenticationController {
 
         // 1. Authenticate the username and password is valid from the database(provided by the JwtUserDetailsService) -
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUserName(),authenticationRequest.getPassword());
+                authenticationRequest.getUserId(),authenticationRequest.getPassword());
         authenticationManager.authenticate(authenticationToken);
 
         // 2. The credentials are valid, a JWT token is created using the JWTTokenUtil and provided to the client. -----
-        final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUserName());
+        final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUserId());
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtRes(token));

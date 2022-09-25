@@ -170,7 +170,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 #### USER
 USER_ID:old_key: | PASSWORD |
 ---------|----------|
-| winnie  | password |
+| winnie  | $2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6 |
 <!-- CONTACT -->
 ## :iphone:	Contact
 

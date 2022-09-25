@@ -12,7 +12,7 @@ public class JwtReq implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@NotBlank(message = "userName is not allowed to be blank")
 	@Size(max = 16, message = "userName is not longer than 16 digits")
-	private String userName;
+	private String userId;
 	@NotBlank(message = "password is not allowed to be blank")
 	@Size(max = 16, message = "password is not longer than 16 digits")
 	private String password;
