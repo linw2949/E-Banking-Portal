@@ -31,4 +31,7 @@ logging:
 jwt:
   secret: ENC(cLJtwf3caWneJUotFtDeOhF4vD847rWoQVE+xirQfulwd8bGqrWpdKW24vwzxllyIwBQKUCqyI+kCni78bd2rQ==)
 
-
+# jasypt Setting -------------------------------------------------------------------------------------------------------
+jasypt:
+  encryptor:
+    password: HSHUYUY@165R!D5561
