@@ -21,20 +21,20 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#:left_speech_bubble:	About The Project">About The Project</a>
+      <a href="#left_speech_bubbleabout-the-project">About The Project</a>
       <ul>
-        <li><a href=":pick:Built With ">Built With</a></li>
+        <li><a href="#pickbuilt-with">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#:gear:Getting Started">Getting Started</a>
+      <a href="#geargetting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
-    <li><a href="#:nut_and_bolt:Usage">Usage</a></li>
-    <li><a href="#:octocat: Table Schema">Table Schema</a></li>
-    <li><a href="#:iphone:	Contact">Contact</a></li>
+    <li><a href="#nut_and_boltusage">Usage</a></li>
+    <li><a href="#octocat-table-schema">Table Schema</a></li>
+    <li><a href="#iphonecontact">Contact</a></li>
   </ol>
 </details>
 
@@ -45,7 +45,7 @@
 
 This is a simple e-Banking Portal that implements a reusable REST API for returning the paginated list of money account transactions created in an arbitrary calendar month for a given customer who is logged in the portal. For each transaction ‘page’ return the total credit and debit values at the current exchange rate (from [the third-party provider](https://apilayer.com/marketplace/exchangerates_data-api)). The source of the list of transactions is consumed from a Kafka topic. There is a [Docker image out of the application](https://registry.hub.docker.com/layers/winnie2949/demo/1.4/images/sha256-57cd27716e1203aaada15796c429b3f89264aedc335dbced652a5d7e5fb9c29f?context=explore) and [the configuration](https://github.com/WinnieLinshi/E-Banking-Portal/blob/master/docker-k8s-demo.yaml) for deploying it to Kubernetes.
 
-[Demo link](http://34.72.139.232:60000/swagger-ui/#/) here is the service that I deployed to [GCP](https://cloud.google.com/) according to the k8s configuration file provided above :slightly_smiling_face::+1:
+[Demo link](http://34.72.139.232:60000/swagger-ui/#/) here is the service that I deployed to [GKE](https://cloud.google.com/) according to the k8s configuration file provided above :slightly_smiling_face::+1:
 
 <p align="right"><a href="#readme-top"><img src="images/back.png" alt="back" width="40" height="40"></a></p>
 
@@ -153,12 +153,12 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 ## :octocat: Table Schema
 **These are the initial data for this project**
 
-#### TRANSACTION
+### TRANSACTION
 | ID:old_key:           | CURRENCY     | IBAN         | DATE     | DESCRIPTION  | AMOUNT |
 |--------------|--------------|--------------|----------|--------------|-------|
 | 89d3o179-abcd-465b-o9ee-e2d5f6ofEld46 | CHF  | CH93-0000-0000-0000-0000-0 | 20220921 | Online payment CHF | 75    |
 
-#### ACCOUNT
+### ACCOUNT
  USER_ID:old_key: | IBAN  :old_key:           |
 ---------|---------------------------|
 | winnie  | CH93-0000-0000-0000-0000-0 |
@@ -167,7 +167,7 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 | lily    | CH93-0000-0000-0000-0000-3 |
 | lily  | CH93-0000-0000-0000-0000- |
 
-#### USER
+### USER
 USER_ID:old_key: | PASSWORD |
 ---------|----------|
 | winnie  | $2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6 |
