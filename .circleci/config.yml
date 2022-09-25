@@ -16,6 +16,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: mvn clean package
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
