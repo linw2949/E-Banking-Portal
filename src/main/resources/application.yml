@@ -27,5 +27,8 @@ logging:
     rollingpolicy:
       max-history: 90
       max-file-size: 10MB
+# jwt Setting ----------------------------------------------------------------------------------------------------------
+jwt:
+  secret: ENC(cLJtwf3caWneJUotFtDeOhF4vD847rWoQVE+xirQfulwd8bGqrWpdKW24vwzxllyIwBQKUCqyI+kCni78bd2rQ==)
 
 
