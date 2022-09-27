@@ -3,6 +3,7 @@
 version: 2.1
 orbs:
   gcp-gke: circleci/gcp-gke@1.4.0
+  gcp-cli: circleci/gcp-cli@2.4.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -36,6 +37,8 @@ workflows:
   build-deploy:
     jobs:
       - release
+      - gcp-cli/install_and_initialize_cli:
+            gcloud-service-key: f71ede1b44d2342acc405e73d0b27e4f33ba1622 
       - gcp-gke/publish-and-rollout-image:
           cluster: autopilot-cluster-1
           container: test 
@@ -45,4 +48,5 @@ workflows:
           use-remote-docker: true 
           gcloud-service-key: f71ede1b44d2342acc405e73d0b27e4f33ba1622
           requires:
+            - gcp-cli/install_and_initialize_cli
             - release # Only deploy once the build job has completed
