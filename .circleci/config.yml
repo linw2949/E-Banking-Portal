@@ -31,6 +31,9 @@ jobs:
   deploy-job:
     docker:
       - image: winnie2949/demo:0.1.$CIRCLE_BUILD_NUM
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     working_directory: /tmp/demo
     steps:
       - run:
