@@ -2,12 +2,11 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 orbs:
-  gcp-cli: circleci/gcp-cli@2.4.1
+  gcp-gke: circleci/gcp-gke@1.4.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  
-  build-job:
+  release:
     working_directory: ~/demo
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -29,34 +28,21 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t winnie2949/demo:$TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
-    # build job ommitted for brevity
-  deploy-job:
-    docker:
-      - image: winnie2949/demo:0.1.$CIRCLE_BUILD_NUM
-        auth:
-          username: $DOCKER_USERNAME
-          password: $DOCKER_PASSWORD
-    working_directory: /tmp/demo
-    steps:
-      - run:
-          name: Deploy Main to GKE
-          command: |
-            sudo /opt/google-cloud-sdk/bin/gcloud docker push us.gcr.io/${PROJECT_NAME}/hello
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube
-            kubectl patch deployment docker-hello-google -p '{"spec":{"template":{"spec":{"containers":[{"name":"docker-hello-google","image":"us.gcr.io/circle-ctl-test/hello:'"$CIRCLE_SHA1"'"}]}}}}'
-
+            docker push winnie2949/demo:$TAG
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - gcp-cli/install_and_initialize_cli:
+      - release
+      - gcp-gke/publish-and-rollout-image:
+          cluster: autopilot-cluster-1
+          container: test 
+          deployment: docker-k8s-demo-deployment 
+          image: winnie2949/demo 
+          dry-run: none 
+          use-remote-docker: true 
           gcloud-service-key: f71ede1b44d2342acc405e73d0b27e4f33ba1622
-      - build-job
-      - deploy-job:
           requires:
-            - build-job # Only deploy once the build job has completed
-          filters:
-            branches:
-              only: master # Only deploy on the main branch      
+            - release # Only deploy once the build job has completed
