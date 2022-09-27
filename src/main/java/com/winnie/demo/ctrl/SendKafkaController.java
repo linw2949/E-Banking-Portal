@@ -1,7 +1,7 @@
 package com.winnie.demo.ctrl;
 
 import com.winnie.demo.service.kafka.SendKafka;
-import com.winnie.model.Transaction;
+import com.winnie.demo.model.DAOTransaction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ public class SendKafkaController {
     private SendKafka sendKafka;
 
     @PostMapping
-    public ResponseEntity<Transaction> sendKafka(@Valid @RequestBody Transaction request) {
+    public ResponseEntity<DAOTransaction> sendKafka(@Valid @RequestBody DAOTransaction request) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("request", request);

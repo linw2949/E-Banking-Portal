@@ -159,18 +159,21 @@ If Http-code is not 200, it means there are errors in formats, permissions, repe
 | 89d3o179-abcd-465b-o9ee-e2d5f6ofEld46 | CHF  | CH93-0000-0000-0000-0000-0 | 20220921 | Online payment CHF | 75    |
 
 ### ACCOUNT
- USER_ID:old_key: | IBAN  :old_key:           |
----------|---------------------------|
+ USER_ID:old_key: | IBAN  :old_key:            |
+---------|----------------------------|
 | winnie  | CH93-0000-0000-0000-0000-0 |
 | winnie  | CH93-0000-0000-0000-0000-1 |
 | winnie  | CH93-0000-0000-0000-0000-2 |
 | lily    | CH93-0000-0000-0000-0000-3 |
-| lily  | CH93-0000-0000-0000-0000- |
+| lily  | CH93-0000-0000-0000-0000-4 |
 
 ### USER
 USER_ID:old_key: | PASSWORD |
 ---------|----------|
-| winnie  | $2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6 |
+| winnie  | $2a$10$vVMom6S/OlDVjTQHTEoi3.5t00JLD/nsSqroEM1gMJ4wp40I4L3de | 
+| lily  | $2a$10$cKvWBwka9DTYMMmbM3gR..psmiflcI9tQA37dwnM/kaipPv5ig.zS |
+
+The 2 User's password clear code is "password"
 <!-- CONTACT -->
 ## :iphone:	Contact
 

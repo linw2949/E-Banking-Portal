@@ -1,17 +1,18 @@
 package com.winnie.demo.ctrl;
 
+import com.winnie.demo.model.DAOUser;
+import com.winnie.demo.model.JwtRes;
+import com.winnie.demo.service.auth.JwtUserDetailsService;
 import com.winnie.demo.service.util.JwtTokenUtil;
-import com.winnie.model.JwtReq;
-import com.winnie.model.JwtRes;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,26 +32,32 @@ public class JwtAuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private UserDetailsService jwtInMemoryUserDetailsService;
+    private JwtUserDetailsService userDetailsService;
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody JwtReq authenticationRequest) throws Exception {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("authenticationRequest", authenticationRequest);
+    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody DAOUser authenticationRequest) throws Exception {
+        authenticate(authenticationRequest.getUserId(), authenticationRequest.getPassword());
 
-            logger.debug(logParams);
-        }
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(authenticationRequest.getUserId());
 
-        // 1. Authenticate the username and password is valid from the database(provided by the JwtUserDetailsService) -
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUserId(),authenticationRequest.getPassword());
-        authenticationManager.authenticate(authenticationToken);
-
-        // 2. The credentials are valid, a JWT token is created using the JWTTokenUtil and provided to the client. -----
-        final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUserId());
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtRes(token));
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody DAOUser user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(user));
+    }
+
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
     }
 }

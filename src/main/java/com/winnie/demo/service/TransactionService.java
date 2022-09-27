@@ -1,11 +1,11 @@
 package com.winnie.demo.service;
 
+import com.winnie.demo.dao.TransactionDao;
 import com.winnie.demo.misc.UnprocessableEntityException;
+import com.winnie.demo.model.DAOTransaction;
+import com.winnie.demo.model.TransactionRes;
 import com.winnie.demo.service.util.Format;
 import com.winnie.demo.service.util.JwtTokenUtil;
-import com.winnie.demo.service.util.SimpleJdbcCallUtils;
-import com.winnie.model.Transaction;
-import com.winnie.model.TransactionRes;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -13,7 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,36 +23,27 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
-public class TransactionService extends AbstractBaseService {
+public class TransactionService{
     private static Log logger = LogFactory.getLog(TransactionService.class);
     @Autowired
+    private TransactionDao transactionDao;
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-    private List<Transaction> queryTransaction(String userId, String iban, int pageNo, int pageSize) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("userId", userId)
-                .addValue("iban", iban)
-                .addValue("pageNo", pageNo)
-                .addValue("pageSize", pageSize);
-
-        Map<String, Object> map = getGeneralSimpleJdbcCallDAO().doCallProcedure("QueryTransaction", parameterSource);
-        return SimpleJdbcCallUtils.convertMapList2BeanList((List<?>) map.get("#result-set-1"), Transaction.class);
+    @Autowired
+    private AccountService accountService;
+    private List<DAOTransaction> findTransactionByIban(String iban, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, Sort.by("date").descending());
+        return transactionDao.findAllByIban(iban,pageable);
     }
 
-    private Optional<Transaction> getTransactionById(String id) {
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("id", id);
-
-        Map<String, Object> map = getGeneralSimpleJdbcCallDAO().doCallProcedure("GetTransactionById", parameterSource);
-        return SimpleJdbcCallUtils.convertMapList2BeanList((List<?>) map.get("#result-set-1"), Transaction.class).stream().findFirst();
+    private DAOTransaction getTransactionById(String id) {
+        return transactionDao.findById(id);
     }
 
     @Transactional
-    public Transaction insertTransaction(Transaction trans) {
+    public DAOTransaction insertTransaction(DAOTransaction trans) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("trans", trans);
@@ -59,22 +52,13 @@ public class TransactionService extends AbstractBaseService {
         }
 
         // 1. check if the primary key is already existed. If so, return HTTP status 422 -------------------------------
-        Optional<Transaction> optional = getTransactionById(trans.getId());
-        if (optional.isPresent()) {
+        DAOTransaction daoTransaction = getTransactionById(trans.getId());
+        if (daoTransaction!=null) {
             throw new UnprocessableEntityException("The id of the product is duplicated.");
         }
 
         // 2. insert into the DB with the transaction, and return the transaction which has been inserted --------------
-        MapSqlParameterSource parameterSource = new MapSqlParameterSource()
-                .addValue("id", trans.getId())
-                .addValue("currency", trans.getCurrency())
-                .addValue("iban", trans.getIban())
-                .addValue("date", trans.getDate())
-                .addValue("description", trans.getDescription())
-                .addValue("amount", trans.getAmount());
-
-        getGeneralSimpleJdbcCallDAO().doCallProcedure("InsertTransaction", parameterSource);
-        return trans;
+        return transactionDao.save(trans);
     }
 
 
@@ -90,8 +74,12 @@ public class TransactionService extends AbstractBaseService {
         }
 
         // 1. Query the DB and get the paginated list of the given iban money account transactions ---------------------
-        String username = jwtTokenUtil.getUserIdFromToken(jwtToken);
-        List<Transaction> transactionList = queryTransaction(username, iban, pageNo, pageSize);
+        String userId = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        if(!accountService.findAccountByIban(iban).getUserId().equals(userId)){
+            throw new UnprocessableEntityException("The Account is not yours.");
+        }
+
+        List<DAOTransaction> transactionList = findTransactionByIban(iban, pageNo, pageSize);
         int totalCount = transactionList.size();
         if (totalCount == 0) return new TransactionRes();
         String endDate = Format.dateFormat(transactionList.get(0).getDate(), "01"); // 01: yyyyMMdd-> yyyy-MM-dd
@@ -104,7 +92,7 @@ public class TransactionService extends AbstractBaseService {
         BigDecimal totalDebit = BigDecimal.ZERO;
 
         // 3. Sum the total credit and debit values --------------------------------------------------------------------
-        for (Transaction p : transactionList) {
+        for (DAOTransaction p : transactionList) {
             String dateKey = Format.dateFormat(p.getDate(), "01"); // 01: yyyyMMdd-> yyyy-MM-dd
             BigDecimal exchangeRate = (BigDecimal) dateExchange.getJSONObject(dateKey).get(p.getCurrency());
             BigDecimal baseAmount = p.getAmount().divide(exchangeRate, 2, RoundingMode.HALF_UP);
@@ -119,8 +107,6 @@ public class TransactionService extends AbstractBaseService {
         // 4. Assemble the resulting parameters to TransactionRes object and return ------------------------------------
         TransactionRes transactionRes = TransactionRes.builder().totalCredit(totalCredit).totalDebit(totalDebit)
                 .transactionList(transactionList).build();
-        transactionRes.setPageNo(pageNo);
-        transactionRes.setTotalCount(totalCount);
 
         return transactionRes;
     }

@@ -5,11 +5,6 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
-# Database Setting -----------------------------------------------------------------------------------
-  datasource:
-    url: jdbc:sqlserver://34.135.251.234;databaseName=demo;encrypt=true;trustServerCertificate=true;
-    username: ENC(9Jqd70PytxngeR2/pn+N5Hv/+hEJ8x6l6t3ZE70xel6WF8UyVeDmk0NlLsK4ylxt)
-    password: ENC(MWa/oc684tCMQzOwzM0rhqkvaS8hbxYivQ788Ue1/JjUQMWwkqIYqyFE/1K4VhxNfjP8mHWsBTiOb/TDK0vtXQ==)
 # Kafka Setting --------------------------------------------------------------------------------------------------------
 app:
   topic:
@@ -29,9 +24,4 @@ logging:
       max-file-size: 10MB
 # jwt Setting ----------------------------------------------------------------------------------------------------------
 jwt:
-  secret: ENC(cLJtwf3caWneJUotFtDeOhF4vD847rWoQVE+xirQfulwd8bGqrWpdKW24vwzxllyIwBQKUCqyI+kCni78bd2rQ==)
-
-# jasypt Setting -------------------------------------------------------------------------------------------------------
-jasypt:
-  encryptor:
-    password: HSHUYUY@165R!D5561
+  secret: javainuse

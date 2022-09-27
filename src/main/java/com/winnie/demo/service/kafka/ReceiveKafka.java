@@ -1,7 +1,7 @@
 package com.winnie.demo.service.kafka;
 
 import com.winnie.demo.service.TransactionService;
-import com.winnie.model.Transaction;
+import com.winnie.demo.model.DAOTransaction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ public class ReceiveKafka {
     private static Log logger = LogFactory.getLog(ReceiveKafka.class);
 
     @KafkaListener(topics = "${app.topic.transaction}", containerFactory = "transactionListener")
-    public void receive(Transaction transaction) {
+    public void receive(DAOTransaction transaction) {
         if (logger.isDebugEnabled()) {
             JSONObject logParams = new JSONObject();
             logParams.put("transaction", transaction);

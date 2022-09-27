@@ -1,8 +1,8 @@
 package com.winnie.demo.ctrl;
 
 import com.winnie.demo.service.TransactionService;
-import com.winnie.model.Transaction;
-import com.winnie.model.TransactionRes;
+import com.winnie.demo.model.DAOTransaction;
+import com.winnie.demo.model.TransactionRes;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -24,12 +24,12 @@ public class TransactionController {
     private HttpServletRequest request;
 
     @PostMapping("/create")
-    public ResponseEntity<Transaction> createTransaction(@Valid @RequestBody Transaction request) {
+    public ResponseEntity<DAOTransaction> createTransaction(@Valid @RequestBody DAOTransaction request) {
         if (logger.isDebugEnabled()) {
             logger.debug(new JSONObject());
         }
 
-        Transaction data = transactionService.insertTransaction(request);
+        DAOTransaction data = transactionService.insertTransaction(request);
 
         return ResponseEntity.ok().body(data);
     }

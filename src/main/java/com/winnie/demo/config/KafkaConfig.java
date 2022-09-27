@@ -1,6 +1,6 @@
 package com.winnie.demo.config;
 
-import com.winnie.model.Transaction;
+import com.winnie.demo.model.DAOTransaction;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class KafkaConfig {
     @Bean
-    public ConsumerFactory<String, Transaction> consumerFactory() {
+    public ConsumerFactory<String, DAOTransaction> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -41,13 +41,13 @@ public class KafkaConfig {
 
         return new DefaultKafkaConsumerFactory<>(
                 config, new StringDeserializer(),
-                new JsonDeserializer<>(Transaction.class));
+                new JsonDeserializer<>(DAOTransaction.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Transaction> transactionListener() {
+    public ConcurrentKafkaListenerContainerFactory<String, DAOTransaction> transactionListener() {
         ConcurrentKafkaListenerContainerFactory<
-                String, Transaction> factory
+                String, DAOTransaction> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
 
