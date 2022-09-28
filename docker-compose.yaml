@@ -40,7 +40,7 @@ services:
 
   demo:
     container_name: demo
-    image: winnie2949/demo:2.0
+    image: winnie2949/demo
     ports:
       - "8080:8080"
     depends_on:
