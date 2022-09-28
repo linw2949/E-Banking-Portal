@@ -40,6 +40,7 @@ jobs:
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account 1050689385415-compute@developer.gserviceaccount.com --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud --quiet config set compute/region ${GCP_REGION}
       - run:
           name: Deploy to App Engine
           command: |
