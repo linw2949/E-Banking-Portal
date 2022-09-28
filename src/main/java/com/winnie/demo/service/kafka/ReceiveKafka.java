@@ -17,12 +17,8 @@ public class ReceiveKafka {
 
     @KafkaListener(topics = "${app.topic.transaction}", containerFactory = "transactionListener")
     public void receive(DAOTransaction transaction) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("transaction", transaction);
+        logger.debug(new JSONObject().put("transaction", transaction));
 
-            logger.debug(logParams);
-        }
         transactionService.insertTransaction(transaction);
     }
 }

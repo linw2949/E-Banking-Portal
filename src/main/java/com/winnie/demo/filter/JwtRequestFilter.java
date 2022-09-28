@@ -33,14 +33,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		if (logger.isTraceEnabled()) {
-			JSONObject logParams = new JSONObject();
-			logParams.put("request", request);
-			logParams.put("response", response);
-			logParams.put("chain", chain);
+		logger.debug(new JSONObject().put("request", request).put("response", response).put("chain", chain));
 
-			logger.debug(logParams);
-		}
 		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String username = null;

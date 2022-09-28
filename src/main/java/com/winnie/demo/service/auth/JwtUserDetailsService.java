@@ -4,6 +4,7 @@ import com.winnie.demo.dao.UserDao;
 import com.winnie.demo.model.DAOUser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,9 +24,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
-
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        logger.debug(new JSONObject().put("userId", userId));
         DAOUser user = userDao.findByUserId(userId);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with userId: " + userId);
@@ -35,9 +36,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public DAOUser save(DAOUser user) {
-        DAOUser newUser = new DAOUser();
-        newUser.setUserId(user.getUserId());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userDao.save(newUser);
+        logger.debug(new JSONObject().put("user", user));
+
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
+        return userDao.save(user);
     }
 }

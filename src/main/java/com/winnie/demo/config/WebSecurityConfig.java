@@ -46,12 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        if (logger.isTraceEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("auth", auth);
+        JSONObject logParams = new JSONObject();
+        logParams.put("auth", auth);
 
-            logger.debug(logParams);
-        }
+        logger.debug(logParams);
 
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
@@ -69,12 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("httpSecurity", httpSecurity);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("httpSecurity",httpSecurity));
 
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated().and()

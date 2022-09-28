@@ -4,7 +4,6 @@ import com.winnie.demo.model.DAOAccount;
 import com.winnie.demo.service.AccountService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,22 +24,11 @@ public class AcoountController {
 
     @PostMapping("/create")
     public ResponseEntity<DAOAccount> createTransaction(@Valid @RequestBody DAOAccount request) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
-        }
-
         return ResponseEntity.ok().body(accountService.save(request));
     }
 
-
     @GetMapping("/myAccount")
     public ResponseEntity<List<DAOAccount>> queryTransaction() {
-        if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
-        }
-
-        final String requestTokenHeader = request.getHeader("Authorization");
-        String jwtToken = requestTokenHeader.substring(7);
-        return ResponseEntity.ok().body(accountService.findAccountByUserId(jwtToken));
+        return ResponseEntity.ok().body(accountService.findAccountByUserId());
     }
 }

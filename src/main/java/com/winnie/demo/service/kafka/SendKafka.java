@@ -21,12 +21,7 @@ public class SendKafka {
     private String topic;
 
     public void send(DAOTransaction transaction){
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("transaction", transaction);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("transaction", transaction));
 
         kafkaTemplate.send(topic, transaction);
     }

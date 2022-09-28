@@ -1,8 +1,8 @@
 package com.winnie.demo.ctrl;
 
-import com.winnie.demo.service.TransactionService;
 import com.winnie.demo.model.DAOTransaction;
 import com.winnie.demo.model.TransactionRes;
+import com.winnie.demo.service.TransactionService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
@@ -25,9 +25,7 @@ public class TransactionController {
 
     @PostMapping("/create")
     public ResponseEntity<DAOTransaction> createTransaction(@Valid @RequestBody DAOTransaction request) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
-        }
+        logger.debug(new JSONObject().put("request", request));
 
         DAOTransaction data = transactionService.insertTransaction(request);
 
@@ -37,12 +35,7 @@ public class TransactionController {
 
     @GetMapping("/{iban}/page={pageNo}&pageSize={pageSize}")
     public ResponseEntity<TransactionRes> queryTransaction(@PathVariable("iban") String iban, @PathVariable("pageNo") int pageNo, @PathVariable("pageSize") int pageSize) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(new JSONObject());
-        }
-
-        final String requestTokenHeader = request.getHeader("Authorization");
-        String jwtToken = requestTokenHeader.substring(7);
-        return ResponseEntity.ok().body(transactionService.findTransactionByIban(jwtToken, iban, pageNo, pageSize));
+        logger.debug(new JSONObject().put("iban", iban).put("pageNo", pageNo).put("pageSize", pageSize));
+        return ResponseEntity.ok().body(transactionService.findOwnTransactionByIban(iban, pageNo, pageSize));
     }
 }

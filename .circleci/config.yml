@@ -24,10 +24,10 @@ jobs:
       - run:
           name: build and push Docker image
           command: |
-                TAG=0.1.$CIRCLE_BUILD_NUM
-
-                docker build -t winnie2949/demo:$TAG .
-                docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
+            TAG=2.1.$CIRCLE_BUILD_NUM
+            docker build -t winnie2949/demo:$TAG .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
+            docker push -u winnie2949/demo:$TAG
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

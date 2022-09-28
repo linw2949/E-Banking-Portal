@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,12 +45,7 @@ public class TransactionService{
 
     @Transactional
     public DAOTransaction insertTransaction(DAOTransaction trans) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("trans", trans);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("trans", trans));
 
         // 1. check if the primary key is already existed. If so, return HTTP status 422 -------------------------------
         DAOTransaction daoTransaction = getTransactionById(trans.getId());
@@ -62,19 +58,11 @@ public class TransactionService{
     }
 
 
-    public TransactionRes findTransactionByIban(String jwtToken, String iban, int pageNo, int pageSize) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("jwtToken", jwtToken);
-            logParams.put("iban", iban);
-            logParams.put("pageNo", pageNo);
-            logParams.put("pageSize", pageSize);
-
-            logger.debug(logParams);
-        }
+    public TransactionRes findOwnTransactionByIban(String iban, int pageNo, int pageSize) {
+        logger.debug(new JSONObject().put("iban", iban).put("pageNo", pageNo).put("pageSize", pageSize));
 
         // 1. Query the DB and get the paginated list of the given iban money account transactions ---------------------
-        String userId = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         if(!accountService.findAccountByIban(iban).getUserId().equals(userId)){
             throw new UnprocessableEntityException("The Account is not yours.");
         }
@@ -112,13 +100,7 @@ public class TransactionService{
     }
 
     public JSONObject getExchangeOfDateRange(String startDate, String endDate) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("startDate", startDate);
-            logParams.put("endDate", endDate);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("startDate", startDate).put("endDate",endDate));
 
         // 1. Build the details of http request ------------------------------------------------------------------------
         OkHttpClient client = new OkHttpClient().newBuilder().build();

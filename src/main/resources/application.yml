@@ -13,9 +13,9 @@ app:
 # logging Setting ------------------------------------------------------------------------------------------------------
 logging:
   level:
-    root: WARN
-    org.springframework.web: INFO
-    com.winnie: TRACE
+    root: ERROR
+    org.springframework.web: ERROR
+    com.winnie: DEBUG
   file:
     name: ./log/log.log
   logback:

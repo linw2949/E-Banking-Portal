@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: docker-k8s-demo
-          image: winnie2949/demo:1.0
+          image: winnie2949/demo
           env:
             - name: "PORT"
               value: "8080"

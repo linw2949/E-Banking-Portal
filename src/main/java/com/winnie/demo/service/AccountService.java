@@ -6,6 +6,7 @@ import com.winnie.demo.service.util.JwtTokenUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class AccountService {
         return AccountDao.findByIban(iban);
     }
 
-    public List<DAOAccount> findAccountByUserId(String jwtToken) {
-        return AccountDao.findAllByUserId(jwtTokenUtil.getUserIdFromToken(jwtToken));
+    public List<DAOAccount> findAccountByUserId() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return AccountDao.findAllByUserId(userId);
     }
 
     public DAOAccount save(DAOAccount daoAccount) {

@@ -20,13 +20,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        if (logger.isTraceEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("request", request);
-            logParams.put("response", response);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("request", request).put("response", response));
 
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }

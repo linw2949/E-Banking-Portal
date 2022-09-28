@@ -27,33 +27,13 @@ public class Format {
      * @return String converted date
      */
     public String dateFormat(String date, String type) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("date", date);
-            logParams.put("type", type);
+        logger.debug(new JSONObject().put("date", date).put("type",type));
 
-            logger.debug(logParams);
-        }
         try {
             Date date1 = DateUtils.parseDate(date, "yyyyMMdd");
             return DateFormatUtils.format(date1, formatMap.get(type));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-    }
-    /**
-     * @param date the date need to be converted
-     * @param type the format type "01": yyyy-MM-dd ; "02": dd-MM-yyyy ; "03": yyyyMMdd
-     * @return String converted date
-     */
-    public String dateFormat(Date date, String type) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("date", date);
-            logParams.put("type", type);
-
-            logger.debug(logParams);
-        }
-        return DateFormatUtils.format(date, formatMap.get(type));
     }
 }

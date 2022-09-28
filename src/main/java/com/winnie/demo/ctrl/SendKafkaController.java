@@ -24,12 +24,8 @@ public class SendKafkaController {
 
     @PostMapping
     public ResponseEntity<DAOTransaction> sendKafka(@Valid @RequestBody DAOTransaction request) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("request", request);
+        logger.debug(new JSONObject().put("request", request));
 
-            logger.debug(logParams);
-        }
         sendKafka.send(request);
         return ResponseEntity.ok().body(request);
     }

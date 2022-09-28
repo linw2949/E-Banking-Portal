@@ -25,35 +25,20 @@ public class JwtTokenUtil implements Serializable {
     private String secret;
 
     public String getUserIdFromToken(String token) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("token", token);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("token", token));
 
         return getClaimFromToken(token, Claims::getSubject);
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("token", token);
-            logParams.put("claimsResolver", claimsResolver);
+        logger.debug(new JSONObject().put("token", token).put("claimsResolver", claimsResolver));
 
-            logger.debug(logParams);
-        }
         final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         return claimsResolver.apply(claims);
     }
 
     public String generateToken(UserDetails userDetails) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("userDetails", userDetails);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("userDetails", userDetails));
 
         String token = Jwts.builder().setClaims(new HashMap<String, Object>()).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000)).signWith(SignatureAlgorithm.HS512, secret).compact();
@@ -62,13 +47,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        if (logger.isDebugEnabled()) {
-            JSONObject logParams = new JSONObject();
-            logParams.put("token", token);
-            logParams.put("userDetails", userDetails);
-
-            logger.debug(logParams);
-        }
+        logger.debug(new JSONObject().put("token", token).put("userDetails", userDetails));
 
         final Date expiration = getClaimFromToken(token, Claims::getExpiration);
         final String username = getUserIdFromToken(token);
