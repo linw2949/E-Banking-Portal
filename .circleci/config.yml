@@ -2,8 +2,9 @@ version: 2
 
 jobs:
   build-job:
+    working_directory: ~/demo
     docker: # run the steps with Docker
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/openjdk:8-jdk
     steps: 
       - checkout # Checkout the code from Github
       - run: mvn clean install
