@@ -6,7 +6,7 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  release:
+  build-and-test:
     working_directory: ~/demo
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -29,19 +29,27 @@ jobs:
             docker build -t winnie2949/demo:$TAG .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
             docker push winnie2949/demo:$TAG
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - run:
+          name: Authorizing gcloud
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account django-shop-269303@appspot.gserviceaccount.com --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run:
+          name: Deploy to App Engine
+          command: |
+            gcloud app deploy
+
 workflows:
   version: 2
   build-deploy:
     jobs:
-      - release
-      - gcp-gke/publish-and-rollout-image:
-          cluster: autopilot-cluster-1
-          container: test 
-          deployment: docker-k8s-demo-deployment 
-          image: winnie2949/demo
-          dry-run: none 
-          use-remote-docker: true 
+      - build-and-test
+      - deploy:
           requires:
-            - release # Only deploy once the build job has completed
+            - build-and-test
